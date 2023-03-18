@@ -1,0 +1,115 @@
+.detail-container{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3.78rem;
+    border: 2px solid red;
+    
+}
+.detail-container::before{
+    content: '';
+    width: 100%;
+    height: 33rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url('https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg') no-repeat center center/cover;
+    box-shadow: 0px -155px 141px -24px rgba(24,29,49,1) inset;
+    opacity: .3;
+}
+.game-detail{
+    height: 30rem;
+    width: 84%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    /* border: 2px solid green; */
+    z-index: 100;
+}
+.img{
+    height: 100%;
+    width: 32%;
+    border-radius: 20px;
+    position: relative;
+    /* border: 2px solid blue; */
+}
+.img img{
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    z-index: 100;
+}
+.img span{
+    position: absolute;
+    top: 0.3rem;
+    right: .3rem;
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid green;
+    color: green;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    z-index: 200;
+}
+.title{
+    width: 66%;
+    height: 100%;
+    /* border: 2px solid yellow; */
+    position: relative;
+    color: white;
+}
+.title small{
+    /* border: 2px solid white; */
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border-radius: 0.3rem;
+    padding: 0 3px;
+}
+.title p{
+    font-size: 1.1rem;
+}
+.about-game , .requirements{
+    width: 84%;
+    height: fit-content;
+    /* border: 2px solid brown; */
+    color: white;
+}
+.screenshots{
+    width: 84%;
+    height: 24rem;
+    color: white;
+    /* border: 2px solid white; */
+}
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-slide {
+    width: 34rem !important;
+    height: 20rem !important;
+    margin-right: 23px !important;
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+  }

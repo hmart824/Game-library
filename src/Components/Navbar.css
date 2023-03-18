@@ -1,0 +1,30 @@
+.navbar{
+    position: fixed !important;
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 400 !important;
+}
+.nav-link:hover ,:focus , .dropdown-item:hover , .search-icon:hover{
+    color: rgb(22, 141, 6) !important;
+}
+.search-icon{
+    color: white;
+    position: absolute;
+    top: .6rem;
+    right: 10.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.btn-style{
+    width: fit-content;
+    padding: 0.2rem 0.9rem;
+    /* margin-bottom: 0.5rem; */
+}
+@media (max-width: 992px) {
+    .search-icon{
+        position: absolute;
+        right: 5rem;
+        top: 0.6rem;
+    }
+    
+}
