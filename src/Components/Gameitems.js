@@ -3,71 +3,18 @@ import './Gameitems.css';
 import { useNavigate } from 'react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { AiFillWindows } from "react-icons/ai";
-import { AiFillApple } from "react-icons/ai";
-import { AiFillAndroid } from "react-icons/ai";
-import { FaPlaystation } from "react-icons/fa";
-import { FaXbox } from "react-icons/fa";
-import { SiNintendoswitch } from "react-icons/si";
-import { DiLinux } from "react-icons/di";
-import { HiDeviceMobile } from "react-icons/hi";
-import { TbWorld } from "react-icons/tb";
+import { getPlatformsIcon , myStyle , getDate } from './Util_functions';
+
 
 export default function Gameitems(props) {
   
-  const getPlatformsIcon = (slug)=>{
-    let platforms = {
-      pc : <AiFillWindows title='pc'/>,
-      linux : <DiLinux title='linux'/>,
-      playstation : <FaPlaystation title='playstation'/>,
-      xbox : <FaXbox title='xbox'/>,
-      ios : <HiDeviceMobile title='ios'/>,
-      mac : <AiFillApple title='apple'/>,
-      android : <AiFillAndroid title='android'/>,
-      nintendo : <SiNintendoswitch title='nintendo'/>,
-      web : <TbWorld title='web'/>
-    }
-
-    return platforms[slug]
-  }
   
-  
-
-  const myStyle = (metaScore)=>{
-    if(metaScore <= 100 && metaScore >= 90){
-        let style = {
-          "borderColor":"green",
-          "color":"green"
-        }
-      return style;
-    }
-    else if(metaScore >= 80 && metaScore < 90){
-      let style = {
-        "borderColor":"blue",
-        "color":"blue"
-      }
-      return style;
-    }
-    else if(metaScore >= 70 && metaScore < 80){
-      let style = {
-        "borderColor":"yellow",
-        "color":"yellow"
-      }
-      return style;
-    }
-    else{
-      let style = {
-        "borderColor":"red",
-        "color":"red"
-      }
-      return style;
-    }
-  }
 
   const navigate = useNavigate();
   const goToDetail = ()=>{
+    let id = props.id;
     console.log('clicked');
-    navigate('/detail')
+    navigate(`/games/${id}`);
   }
     return (
       <div>
@@ -95,7 +42,7 @@ export default function Gameitems(props) {
             <div className="ratings">
               <span>Ratings : </span><span>{props.rating?.toString().slice(0,3)}</span> / <span>{props.ratingTop}</span>
             </div>
-            <h4>Released On : {props.releasedDate?.split('-').reverse().join('-')}</h4>
+            <h4>Released On : {getDate(props.releasedDate)}</h4>
           </div>
          </div>
       </div>

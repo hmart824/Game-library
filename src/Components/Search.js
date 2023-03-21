@@ -35,11 +35,12 @@ export default class Search extends Component {
     this.setState({interval: intval});
   }
   
-  fetchMoreData = async()=>{   
+  fetchMoreData = async()=>{  
     let p = this.state.page + 1;
-    this.setState({page: p});
+    console.log(this.state.page)
     let res = await axios.get(searchGamesURL(this.state.searchInput.replace(/\s+/g," ").trim() , p));
     this.setState({
+      page: p,
       searchedGames: this.state.searchedGames.concat(res.data.results)
     })
   }   
@@ -56,7 +57,10 @@ export default class Search extends Component {
             placeholder='Search Games' 
             value={this.state.searchInput} 
             onChange={(e)=>{this.setState({searchInput : e.target.value})}}
-            onKeyUp={()=>{this.searchGames(this.state.searchInput.replace(/\s+/g," ").trim() , this.state.page)}}
+            onKeyUp={()=>{
+              this.searchGames(this.state.searchInput.replace(/\s+/g," ").trim() , 1);
+              this.setState({page: 1});
+            }}
             />
         </div>
         

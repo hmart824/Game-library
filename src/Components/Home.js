@@ -57,7 +57,7 @@ export default class Home extends Component {
         <div className="card-row">
         <h3>{this.props.title}</h3>
             {this.state.games.map((element)=>{
-                 return <Gameitems key={element.id} name = {element.name} bgImg={element.background_image} parentPlatform={element.parent_platforms} releasedDate={element.released} rating={element.rating} ratingTop={element.rating_top} metacritic={element.metacritic}/>
+                 return <Gameitems key={element.id} id={element.id} name = {element.name} bgImg={element.background_image} parentPlatform={element.parent_platforms} releasedDate={element.released} rating={element.rating} ratingTop={element.rating_top} metacritic={element.metacritic}/>
             })}
         </div> 
         </InfiniteScroll>

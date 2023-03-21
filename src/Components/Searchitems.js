@@ -1,32 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './Searchitems.css';
 
-export default class Searchitems extends Component {
-  goToDetail = ()=>{
-    console.log(this.props.gameId);
+export default function Searchitems(props) {
+  const navigate = useNavigate();
+  const goToDetail = ()=>{
+    let id = props.id;
+    console.log('clicked');
+    navigate(`/games/${id}`);
   }
-  render() {
-    let {name , bgImg} = this.props;
     return (
       <>
-        <div className='game-list my-1' onClick={this.goToDetail}>
+        <div className='game-list my-1'onClick={()=>{goToDetail()}}>
             <div className="game-img">
-                {/* <img src={bgImg} alt="" /> */}
                 <LazyLoadImage
-                  src={bgImg} 
+                  src={props.bgImg} 
                   height={72}
                   width={56} 
                   effect='blur'
-                  placeholderSrc={bgImg}
+                  placeholderSrc={props.bgImg}
                   />
             </div>
             <div className="game-title">
-                <span className='mx-2'>{name}</span>
+                <span className='mx-2'>{props.name}</span>
             </div>
         </div>
       </>
     )
   }
-}
+

@@ -61,4 +61,21 @@ export const sportsGamesURL = (page)=> `${baseUrl}${sportsGames}&page=${page}`;
 
 // https://api.rawg.io/api/games?search=g&search_precise=true&search_exact=true&key=bef892605937470db41e81a497c8b119
 
+//search url
 export const searchGamesURL = (title , page)=> `${baseUrl}/games?search=${title}&search_precise=true&search_exact=true&${key}&page_size=10&page=${page}`;
+
+
+// https://api.rawg.io/api/games/outlast?key=bef892605937470db41e81a497c8b119
+//detail url
+export const detailURL = (id)=>`${baseUrl}/games/${id}?${key}`;
+
+
+// https://api.rawg.io/api/games/3498/screenshots?key=bef892605937470db41e81a497c8b119
+export const screenshotsURL = (id)=>`${baseUrl}/games/${id}/screenshots?${key}`;
+
+// https://api.rawg.io/api/games/3498/stores?key=bef892605937470db41e81a497c8b119
+export const storesURL = (id)=>`${baseUrl}/games/${id}/stores?${key}`;
+
+
+// https://api.rawg.io/api/games/3498/movies?key=bef892605937470db41e81a497c8b119
+export const trailersURL = (id)=>`${baseUrl}/games/${id}/movies?${key}&page_size=2`;

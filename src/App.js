@@ -1,6 +1,5 @@
 import React, { Component , Suspense , lazy } from 'react'
 import Navbar from './Components/Navbar';
-import Detailpage from './Components/Detailpage';
 import Search from './Components/Search';
 import Loader from './Components/Loader';
 import './App.css';
@@ -24,6 +23,7 @@ import {
   Route
 } from "react-router-dom";
 const Home = lazy(() => import('./Components/Home'));
+const Detailpage = lazy(() => import('./Components/Detailpage'));
 
 export default class App extends Component {
   constructor(){
@@ -60,7 +60,7 @@ export default class App extends Component {
                 <Route exact path='/genre/puzzleGames' element={<Home key="puzzleGames" URL = {(p)=> puzzleGamesURL(p)} title="Puzzel Games"/>}/>
                 <Route exact path='/genre/racingGames' element={<Home key="racingGames" URL = {(p)=> racingGamesURL(p)} title="Racing Games"/>}/>
                 <Route exact path='/genre/sportsGames' element={<Home key="sportsGames" URL = {(p)=> sportsGamesURL(p)} title="Sports Games"/>}/>
-                <Route exact path='/detail' element={<Detailpage/>}/>
+                <Route exact path='/games/:id' element={<Detailpage/>}/>
               </Routes>
             </Suspense>
         </div>

@@ -1,0 +1,28 @@
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+.swiper-slide {
+    width: 34rem !important;
+    height: 20rem !important;
+    margin-right: 1.4rem !important;
+    text-align: center;
+    font-size: 1.3rem;
+    background: #fff;
+    border-radius: 1.25rem;
+  }
+  
+  .swiper-slide video {
+    border-radius: 1.25rem;
+    object-fit: cover;
+  }
+  .swiper-slide .react-player__preview {
+    border-radius: 1.25rem;
+  }
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.25rem;
+    object-fit: cover;
+  }
