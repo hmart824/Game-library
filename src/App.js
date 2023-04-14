@@ -25,7 +25,8 @@ const Detailpage = lazy(() => import('./Components/Detailpage'));
 const Loginpage = lazy(() => import('./Components/Loginpage'));
 
 export default function App() {
-  const [user, setUser] = useState();
+  const newUser =  JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(newUser);
     return (
       <>
       <Router>
@@ -44,8 +45,8 @@ export default function App() {
                 <Route exact path='/genre/puzzleGames' element={<Home key="puzzleGames" URL = {(p)=> puzzleGamesURL(p)} title="Puzzel Games"/>}/>
                 <Route exact path='/genre/racingGames' element={<Home key="racingGames" URL = {(p)=> racingGamesURL(p)} title="Racing Games"/>}/>
                 <Route exact path='/genre/sportsGames' element={<Home key="sportsGames" URL = {(p)=> sportsGamesURL(p)} title="Sports Games"/>}/>
-                <Route exact path='/games/:id' element={<Detailpage/>}/>
-                <Route exact path='/login' element={<Loginpage currentUser={setUser}/>}/>
+                <Route exact path='/games/:id' element={<Detailpage currentUser={user}/>}/>
+                <Route exact path='/login' element={<Loginpage setUser={setUser}/>}/>
               </Routes>
             </Suspense>
         </div>

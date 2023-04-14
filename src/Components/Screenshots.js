@@ -2,6 +2,7 @@ import React from 'react';
 import './Screenshots.css';
 import ReactPlayer from 'react-player';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 

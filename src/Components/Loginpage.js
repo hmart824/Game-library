@@ -15,8 +15,8 @@ function Loginpage(props) {
                 photoURL: result.user.photoURL,
                 userId: result.user.uid
             };
-            props.currentUser(newUser);
-            navigate('/');
+            props.setUser(newUser);
+            navigate(-1);
             localStorage.setItem('user' , JSON.stringify(newUser));
             db.collection('users').doc(result.user.email).set(newUser);
         })

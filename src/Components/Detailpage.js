@@ -13,7 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import './Detailpage.css';
 
-export default function Detailpage() {
+export default function Detailpage(props) {
   const {id} = useParams();
   const [gameDetail, setGameDetail] = useState([]);
   const [screenshots, setScreenshots] = useState([]);
@@ -53,7 +53,6 @@ export default function Detailpage() {
 
     const getDevelopers = async(id)=>{
       let res = await axios.get(devTeamURL(id));
-      console.log(res.data.results);
       setDevelopers(res.data.results);
     }
 
@@ -63,7 +62,6 @@ export default function Detailpage() {
 
 
   const goToSite = (link)=>{
-    console.log('clicked')
     window.open(`${link}`);
   };
   
@@ -75,7 +73,7 @@ export default function Detailpage() {
     <Navbar/> 
      <div className="detail-container" style={{"--img": `url(${gameDetail.background_image})`}}>
         <div className="game-detail">
-          <DetailHeader gameDetail={gameDetail}/>
+          <DetailHeader gameDetail={gameDetail} currentUser={props.currentUser}/>
         </div>
         
         <div className="screenshots my-3">
