@@ -1,14 +1,38 @@
-import React, { Component } from 'react'
+import React from 'react';
+import { useState } from 'react';
+import {auth} from '../Firebase';
 import './Navbar.css';
+import Search from './Search';
 import { BiSearch } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
 
-export default class Navbar extends Component {
-  render() {
-    let {setSearch} = this.props;
+export default function Navbar() {
+  
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const [search, setSearch] = useState(false);
+  const [user, setUser] = useState(currentUser);
+  
+
+    
+  
+  
+  const toggle = ()=>{
+    setSearch(!search);
+  }
+
+  const signOut = ()=>{
+    auth.signOut()
+    .then(()=>{
+      setUser(null);
+      localStorage.removeItem("user");
+    })
+    .catch((err)=>{alert(err.message)})
+  }
+  
     return (
       <>
+        {search && <Search/>}
         <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
           <div className="container-fluid">
             <span className="navbar-brand" to="/" style={{"fontSize": "1.5rem" , "cursor" : "default"}}>Pc<span className='text-danger' style={{"fontSize": "1.2rem"}}>World</span></span>
@@ -62,12 +86,17 @@ export default class Navbar extends Component {
               </ul>
               
               <div className=" nav-end-item d-flex">
-                <button type="button" className="btn btn-outline-success btn-sm btn-style" style={{"marginRight":".5rem"}}>signIn</button>
-                <button type="button" className="btn btn-outline-success btn-sm btn-style">signUp</button>
+                {user ? 
+                  (<div className="avatar">
+                    <img src={user.photoURL} alt="" onClick={signOut}/>
+                  </div>)
+                  : (<><button type="button" className="btn btn-outline-success btn-sm btn-style" style={{ "marginRight": ".5rem" }}><Link to="/login">signIn</Link></button><button type="button" className="btn btn-outline-success btn-sm btn-style"><Link to="/login">signUp</Link></button></>)
+                }
+                
               </div>  
               
             </div>
-              <div className="search-icon " onClick={()=>{setSearch()}}>
+              <div className="search-icon " onClick={toggle}>
                   <BiSearch/>
               </div>
           </div>
@@ -76,4 +105,4 @@ export default class Navbar extends Component {
       </>
     )
   }
-}
+

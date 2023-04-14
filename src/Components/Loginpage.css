@@ -1,0 +1,75 @@
+.login{
+    color: white;
+}
+
+.bag-img{
+    height: 100vh;
+}
+.bag-img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+form{
+    position: absolute;
+    top: 2rem;
+    left: 8rem;
+    width: 20rem;
+    height: 25rem;
+    background: #00000085;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: .3rem;
+    padding: 0 1rem;
+}
+form .inp{
+    position: relative;
+    width: 100%;
+    margin-top: 1.3rem;
+    font-size: 1rem;
+    border: 2px solid #00a400;
+    background-color: #ffffff12;
+    border-radius: .3rem;
+}
+.inp input{
+    background: transparent;
+    border: none;
+    outline: none;
+    position: relative;
+    width: 100%;
+    padding: 0.1rem 1rem;
+    color: white;
+    padding: 0.4rem 0.4rem;
+}
+.inp span{
+    position: absolute;
+    top: 0.3rem;
+    left: .2rem;
+    transition: .5s;
+}
+.inp input:valid ~ span ,
+.inp input:focus ~ span{
+    transform: translateX(0.5rem) translateY(-0.9rem);
+    background-color: #00a400;
+    font-size: .7rem;
+    padding: 0 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    border-radius: 0.2rem;
+    color: white;
+}
+
+button{
+    background: transparent;
+    border: 2px solid #00a400;
+    color: white;
+    padding: .1rem .5rem;
+    border-radius: .2rem;
+    transition: .3s;
+}
+button:hover{
+    background: white;
+    color: #00a400;
+}

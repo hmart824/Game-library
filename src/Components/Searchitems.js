@@ -7,8 +7,8 @@ import './Searchitems.css';
 export default function Searchitems(props) {
   const navigate = useNavigate();
   const goToDetail = ()=>{
-    let id = props.id;
-    console.log('clicked');
+    let id = props.gameId;
+    console.log(id);
     navigate(`/games/${id}`);
   }
     return (

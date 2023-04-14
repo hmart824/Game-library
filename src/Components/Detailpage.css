@@ -10,7 +10,9 @@
     
 }
 .detail-container h3{
+    position: relative;
     color: #dc3545;
+    z-index: 300;
 }
 .detail-container::before{
     content: '';
@@ -62,7 +64,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: #ffffff91;
+    background-color: #000000ad;;
     z-index: 200;
 }
 .title{
@@ -128,4 +130,17 @@
     background-color: #dcdcdc;
     color: black;
     transition: .4s;
+  }
+  .dev-team{
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 4rem;
+  }
+  .dev-team h3{
+    position: absolute;
+    top: 0;
   }

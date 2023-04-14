@@ -1,6 +1,4 @@
-import React, { Component , Suspense , lazy } from 'react'
-import Navbar from './Components/Navbar';
-import Search from './Components/Search';
+import React, { Suspense , lazy , useState} from 'react';
 import Loader from './Components/Loader';
 import './App.css';
 import {
@@ -20,32 +18,18 @@ import {
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
 } from "react-router-dom";
 const Home = lazy(() => import('./Components/Home'));
 const Detailpage = lazy(() => import('./Components/Detailpage'));
+const Loginpage = lazy(() => import('./Components/Loginpage'));
 
-export default class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      search : false
-    }
-    
-  }
-  
-  toggle = ()=>{
-    this.setState({
-      search : !this.state.search
-    })
-  }
-  render() {
+export default function App() {
+  const [user, setUser] = useState();
     return (
       <>
       <Router>
         <div className='wrapper position-relative' style={{"backgroundColor":"#181D31" , "minHeight": "100vh"}}>
-            <Navbar setSearch={()=>{this.toggle()}}/> 
-            {this.state.search && <Search/>}
             <Suspense fallback={<Loader/>}>
               <Routes>
                 <Route exact path='/' element={<Home key="home" URL = {(p)=> popularGamesURL(p)} title="Popular Games"/>}/>
@@ -61,6 +45,7 @@ export default class App extends Component {
                 <Route exact path='/genre/racingGames' element={<Home key="racingGames" URL = {(p)=> racingGamesURL(p)} title="Racing Games"/>}/>
                 <Route exact path='/genre/sportsGames' element={<Home key="sportsGames" URL = {(p)=> sportsGamesURL(p)} title="Sports Games"/>}/>
                 <Route exact path='/games/:id' element={<Detailpage/>}/>
+                <Route exact path='/login' element={<Loginpage currentUser={setUser}/>}/>
               </Routes>
             </Suspense>
         </div>
@@ -68,7 +53,7 @@ export default class App extends Component {
     </>
     )
   }
-}
+
 
 
 
