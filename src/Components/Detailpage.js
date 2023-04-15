@@ -13,8 +13,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import './Detailpage.css';
 
-export default function Detailpage(props) {
+export default function Detailpage() {
   const {id} = useParams();
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const [user, setUser] = useState(currentUser);
   const [gameDetail, setGameDetail] = useState([]);
   const [screenshots, setScreenshots] = useState([]);
   const [stores, setStores] = useState([]);
@@ -70,10 +72,10 @@ export default function Detailpage(props) {
     
   return (
     <>
-    <Navbar/> 
+    <Navbar setUser={setUser}/> 
      <div className="detail-container" style={{"--img": `url(${gameDetail.background_image})`}}>
         <div className="game-detail">
-          <DetailHeader gameDetail={gameDetail} currentUser={props.currentUser}/>
+          <DetailHeader gameDetail={gameDetail} currentUser={user}/>
         </div>
         
         <div className="screenshots my-3">

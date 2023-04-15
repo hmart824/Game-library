@@ -7,11 +7,11 @@ import { BiSearch } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
 
-export default function Navbar() {
+export default function Navbar(props) {
   
   const currentUser = JSON.parse(localStorage.getItem('user'));
-  const [search, setSearch] = useState(false);
   const [user, setUser] = useState(currentUser);
+  const [search, setSearch] = useState(false);
   
 
     
@@ -25,6 +25,9 @@ export default function Navbar() {
     auth.signOut()
     .then(()=>{
       setUser(null);
+      if(props.setUser){
+        props.setUser(null);
+      }
       localStorage.removeItem("user");
     })
     .catch((err)=>{alert(err.message)})

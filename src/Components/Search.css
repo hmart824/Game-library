@@ -20,7 +20,7 @@
     width: 21rem;
     color: white;
 }
-.inp input{
+.search .inp input{
     width: 100%;
     border-radius: 8px;
     border: 2px solid white;
@@ -29,7 +29,7 @@
     color: white !important;
     outline: none;
 }
-.inp input::placeholder{
+.search .inp input::placeholder{
     color: white;
 }
 .search-list{

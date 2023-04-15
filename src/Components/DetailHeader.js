@@ -23,8 +23,7 @@ function DetailHeader(props) {
     if(props.currentUser){
       checkLibrary();
     }
-  }, [props.gameDetail.id])
-  
+  }, [props.currentUser , props.gameDetail.id]);
 
   const addToLibrary = async ()=>{
     if(!added && props.currentUser){
@@ -66,7 +65,7 @@ function DetailHeader(props) {
               <p>Developers : {props.gameDetail.developers?.map((el)=>{return el.name}).join(' , ')}</p>
               <p>Publishers : {props.gameDetail.publishers?.map((el)=>{return el.name}).join(' , ')}</p>
               <p>Available On : {props.gameDetail.stores?.map((el)=>{return el.store.name}).join(' , ')}</p>
-              <button type="button" className="btn btn-outline-success btn-sm btn-style" onClick={addToLibrary}>{(!props.currentUser) || (!added && props.currentUser) ? 'add to library' : 'In Library'}</button>
+              <button type="button" className="btn btn-outline-success btn-sm btn-style" onClick={addToLibrary}>{props.currentUser && added ? 'In Library' : 'add to library'}</button>
           </div>
     </>
   )
