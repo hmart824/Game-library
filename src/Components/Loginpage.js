@@ -16,7 +16,6 @@ function Loginpage() {
                 userId: result.user.uid
             };
             navigate(-1);
-            localStorage.setItem('user' , JSON.stringify(newUser));
             db.collection('users').doc(result.user.email).set(newUser);
         })
         .catch((err)=>{alert(err.message)});

@@ -1,6 +1,5 @@
 import { React , useEffect , useState} from 'react';
 import axios from 'axios';
-import Navbar from './Navbar';
 import Screenshots from './Screenshots';
 import DevelopmentTeam from './DevelopmentTeam';
 import DetailHeader from './DetailHeader';
@@ -72,7 +71,7 @@ export default function Detailpage() {
     
   return (
     <>
-    <Navbar setUser={setUser}/> 
+    {/* <Navbar setUser={setUser}/>  */}
      <div className="detail-container" style={{"--img": `url(${gameDetail.background_image})`}}>
         <div className="game-detail">
           <DetailHeader gameDetail={gameDetail} currentUser={user}/>

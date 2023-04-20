@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import Navbar from './Navbar';
+
 import Gameitems from './Gameitems';
 import './Home.css';
 import Loader from './Loader';
@@ -49,7 +49,7 @@ export default class Home extends Component {
   render() {
     return (
         <>
-        <Navbar/> 
+        
          <InfiniteScroll
           dataLength={this.state.games?.length}
           next={this.fetchMoreData}

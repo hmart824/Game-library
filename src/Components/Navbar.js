@@ -8,15 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 export default function Navbar(props) {
-  
-  const currentUser = JSON.parse(localStorage.getItem('user'));
-  const [user, setUser] = useState(currentUser);
   const [search, setSearch] = useState(false);
-  
-
-    
-  
-  
   const toggle = ()=>{
     setSearch(!search);
   }
@@ -24,11 +16,8 @@ export default function Navbar(props) {
   const signOut = ()=>{
     auth.signOut()
     .then(()=>{
-      setUser(null);
-      if(props.setUser){
-        props.setUser(null);
-      }
-      localStorage.removeItem("user");
+      console.log('signed out successfully');
+      props.setUser(null);
     })
     .catch((err)=>{alert(err.message)})
   }
@@ -89,9 +78,9 @@ export default function Navbar(props) {
               </ul>
               
               <div className=" nav-end-item d-flex">
-                {user ? 
+                {props.currentUser ? 
                   (<div className="avatar">
-                    <img src={user.photoURL} alt="" onClick={signOut}/>
+                    <img src={props.currentUser.photoURL} alt="" onClick={signOut}/>
                   </div>)
                   : (<><button type="button" className="btn btn-outline-success btn-sm btn-style" style={{ "marginRight": ".5rem" }}><Link to="/login">signIn</Link></button><button type="button" className="btn btn-outline-success btn-sm btn-style"><Link to="/login">signUp</Link></button></>)
                 }
