@@ -4,4 +4,13 @@
     box-sizing: border-box;
 }
 
-
+@media (max-width: 1096px) {
+    html{
+        font-size: 91%;
+    }
+}
+@media (max-width: 645px) {
+    html{
+        font-size: 80%;
+    }
+}

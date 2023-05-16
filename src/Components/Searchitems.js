@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './Searchitems.css';
+import {searchVal} from './Navbar';
 
 export default function Searchitems(props) {
+  const setSearch = useContext(searchVal);
   const navigate = useNavigate();
   const goToDetail = ()=>{
+    setSearch(false);
     let id = props.gameId;
     console.log(id);
     navigate(`/games/${id}`);

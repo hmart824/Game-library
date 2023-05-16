@@ -37,8 +37,8 @@ function Loginpage() {
                     <span>Password</span>
                 </div>
                 <button style={{'marginTop': '1.2rem'}}>Submit</button>
-                <button onClick={signInWithGoogle}>Sign in with google</button>
 
+                <button onClick={signInWithGoogle}>Sign in with google</button>
             </form>
         </div>
    </>

@@ -56,3 +56,12 @@
 .platform span{
     margin-right: 4px;
 }
+
+@media (max-width: 345px) {
+    .card-item{
+        width: 90% !important;
+    }
+    .card-img span{
+        width: 100% !important;
+    }
+}

@@ -17,7 +17,7 @@ export default function Gameitems(props) {
     navigate(`/games/${id}`);
   }
     return (
-      <div>
+      <>
         <div className="card-item" onClick={()=>{goToDetail()}}>
           <div className="card-img">
             <LazyLoadImage
@@ -45,7 +45,7 @@ export default function Gameitems(props) {
             <h4>Released On : {getDate(props.releasedDate)}</h4>
           </div>
          </div>
-      </div>
+      </>
     )
   }
 

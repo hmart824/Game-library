@@ -73,3 +73,15 @@ button:hover{
     background: white;
     color: #00a400;
 }
+
+@media (max-width: 645px) {
+    .login{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    form{
+        top: auto;
+        left: auto;
+    }
+}

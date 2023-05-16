@@ -12,10 +12,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import './Detailpage.css';
 
-export default function Detailpage() {
+export default function Detailpage(props) {
   const {id} = useParams();
-  const currentUser = JSON.parse(localStorage.getItem('user'));
-  const [user, setUser] = useState(currentUser);
   const [gameDetail, setGameDetail] = useState([]);
   const [screenshots, setScreenshots] = useState([]);
   const [stores, setStores] = useState([]);
@@ -23,41 +21,46 @@ export default function Detailpage() {
   const [developers, setDevelopers] = useState([]);
 
   useEffect(() => {
-    const getDetails = async(id)=>{
-      let res = await axios.get(detailURL(id));
-      setGameDetail(res.data);
-    }
+    try{
+      const getDetails = async(id)=>{
+        let res = await axios.get(detailURL(id));
+        setGameDetail(res.data);
+      }
+  
+      getDetails(id);
+  
+      const getScreenshots = async(id)=>{
+        let res = await axios.get(screenshotsURL(id));
+        setScreenshots(res.data.results);
+      }
+  
+      getScreenshots(id);
+  
+  
+      const getStores = async(id)=>{
+        let res = await axios.get(storesURL(id));
+        setStores(res.data.results);
+      }
+  
+      getStores(id);
+  
+      const getTrailers = async(id)=>{
+        let res = await axios.get(trailersURL(id));
+        setTrailers(res.data.results);
+      }
+  
+      getTrailers(id);
+  
+      const getDevelopers = async(id)=>{
+        let res = await axios.get(devTeamURL(id));
+        setDevelopers(res.data.results);
+      }
+  
+      getDevelopers(id);
 
-    getDetails(id);
-
-    const getScreenshots = async(id)=>{
-      let res = await axios.get(screenshotsURL(id));
-      setScreenshots(res.data.results);
-    }
-
-    getScreenshots(id);
-
-
-    const getStores = async(id)=>{
-      let res = await axios.get(storesURL(id));
-      setStores(res.data.results);
-    }
-
-    getStores(id);
-
-    const getTrailers = async(id)=>{
-      let res = await axios.get(trailersURL(id));
-      setTrailers(res.data.results);
-    }
-
-    getTrailers(id);
-
-    const getDevelopers = async(id)=>{
-      let res = await axios.get(devTeamURL(id));
-      setDevelopers(res.data.results);
-    }
-
-    getDevelopers(id);
+    }catch(err){
+        console.log(err);
+      }
   
   },[id]);
 
@@ -74,12 +77,12 @@ export default function Detailpage() {
     {/* <Navbar setUser={setUser}/>  */}
      <div className="detail-container" style={{"--img": `url(${gameDetail.background_image})`}}>
         <div className="game-detail">
-          <DetailHeader gameDetail={gameDetail} currentUser={user}/>
+          <DetailHeader gameDetail={gameDetail} currentUser={props.currentUser}/>
         </div>
         
-        <div className="screenshots my-3">
+        <section className="screenshots my-3">
           <Screenshots screenshots={screenshots} trailers={trailers}/>
-        </div>
+        </section>
 
         <section className="about-game my-3">
           <h3>About</h3>
@@ -100,17 +103,17 @@ export default function Detailpage() {
           })}</p>
         </section>
 
-        <section className="stores">
+        {stores && <section className="stores">
           <h3>Available On</h3>
           <ul>
             {stores?.map((el)=>{
               return <li key={el.id} onClick={()=>{goToSite(el.url)}}>{getStoreIcon(el.store_id).icon} <span>{getStoreIcon(el.store_id).name}</span></li>
             })}
           </ul>
-        </section>
+        </section>}
 
         <section className="dev-team">
-            <DevelopmentTeam developers={developers}/>
+            {developers && <DevelopmentTeam developers={developers}/>}
         </section>
     </div>
     </>

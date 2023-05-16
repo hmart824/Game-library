@@ -3,19 +3,34 @@ import './Screenshots.css';
 import ReactPlayer from 'react-player';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+
+// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+// import required modules
+import { EffectCoverflow} from "swiper";
 
 function Screenshots(props) {
   return (
     <>
         <h3>Screenshots</h3>
-            <Swiper 
-            slidesPerView={2}
-            spaceBetween={20}
-            modules={[Navigation]}
-            className="mySwiper"
-            >
+        <Swiper
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={"auto"}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          modules={[EffectCoverflow]}
+          className="mySwiper"
+        >
                 {props.trailers && props.trailers.map((el)=>{
                     return  <SwiperSlide key={el.id}>
                                 <ReactPlayer

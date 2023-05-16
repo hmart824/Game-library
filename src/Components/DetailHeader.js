@@ -3,6 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import db from '../Firebase';
 import {firebase} from '../Firebase';
+import { collection,getDocs } from "firebase/firestore";
 import { getPlatformsIcon , myStyle , getDate } from './Util_functions';
 import { useNavigate } from 'react-router';
 
@@ -12,13 +13,13 @@ function DetailHeader(props) {
 
   useEffect(() => {
     const checkLibrary = async ()=>{
-      await db.collection('library').doc(props.currentUser.email).collection('games').onSnapshot((snapshot)=>{
-        snapshot.docs.forEach((el) => {
-          if (el.data().id === props.gameDetail.id) {
-            return setAdded(true);
-          }
-        });
-      });
+      const gamesCollection = collection(db, "library" , props.currentUser.email , "games")
+      const games = await getDocs(gamesCollection);
+      games.forEach((doc) => {
+        if(doc.data().id === props.gameDetail.id){
+          return setAdded(true);
+        }
+      })
     }
     if(props.currentUser){
       checkLibrary();
@@ -28,6 +29,7 @@ function DetailHeader(props) {
   const addToLibrary = async ()=>{
     if(!added && props.currentUser){
       console.log(props.currentUser.email)
+      setAdded(true);
       let payload = {
         id: props.gameDetail.id,
         title: props.gameDetail.name,

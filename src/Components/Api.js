@@ -59,6 +59,8 @@ export const puzzleGamesURL = (page)=> `${baseUrl}${puzzleGames}&page=${page}`;
 export const racingGamesURL = (page)=> `${baseUrl}${racingGames}&page=${page}`;
 export const sportsGamesURL = (page)=> `${baseUrl}${sportsGames}&page=${page}`;
 
+
+
 // https://api.rawg.io/api/games?search=g&search_precise=true&search_exact=true&key=bef892605937470db41e81a497c8b119
 
 //search url
@@ -84,3 +86,5 @@ export const trailersURL = (id)=>`${baseUrl}/games/${id}/movies?${key}&page_size
 //dev team url
 //https://api.rawg.io/api/games/3498/development-team?key=bef892605937470db41e81a497c8b119
 export const devTeamURL = (id)=> `${baseUrl}/games/${id}/development-team?${key}` ;
+
+

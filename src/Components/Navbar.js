@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { useState } from 'react';
 import {auth} from '../Firebase';
 import './Navbar.css';
@@ -6,7 +6,7 @@ import Search from './Search';
 import { BiSearch } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
-
+const searchVal = createContext();
 export default function Navbar(props) {
   const [search, setSearch] = useState(false);
   const toggle = ()=>{
@@ -24,7 +24,10 @@ export default function Navbar(props) {
   
     return (
       <>
-        {search && <Search/>}
+        {search &&
+        <searchVal.Provider value={setSearch}>
+          <Search/>
+        </searchVal.Provider>}
         <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
           <div className="container-fluid">
             <span className="navbar-brand" to="/" style={{"fontSize": "1.5rem" , "cursor" : "default"}}>Pc<span className='text-danger' style={{"fontSize": "1.2rem"}}>World</span></span>
@@ -50,18 +53,6 @@ export default function Navbar(props) {
                 </li>
                 <li className="nav-item dropdown">
                   <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Platforms
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li><Link className="dropdown-item" to="/">Pc</Link></li>
-                    <li><Link className="dropdown-item" to="/">Play Station</Link></li>
-                    <li><Link className="dropdown-item" to="/">Xbox One</Link></li>
-                    <li><Link className="dropdown-item" to="/">Ios</Link></li>
-                    <li><Link className="dropdown-item" to="/">Android</Link></li>
-                  </ul>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Genres
                   </Link>
                   <ul className="dropdown-menu">
@@ -75,20 +66,25 @@ export default function Navbar(props) {
                     <li><Link className="dropdown-item" to="/genre/sportsGames">Sports</Link></li>
                   </ul>
                 </li>
+                {props.currentUser && <li className="nav-item">
+                  <Link className="nav-link" to="/library">Library</Link>
+                </li>}
               </ul>
               
               <div className=" nav-end-item d-flex">
-                {props.currentUser ? 
-                  (<div className="avatar">
-                    <img src={props.currentUser.photoURL} alt="" onClick={signOut}/>
-                  </div>)
-                  : (<><button type="button" className="btn btn-outline-success btn-sm btn-style" style={{ "marginRight": ".5rem" }}><Link to="/login">signIn</Link></button><button type="button" className="btn btn-outline-success btn-sm btn-style"><Link to="/login">signUp</Link></button></>)
+                {!props.currentUser && (<><button type="button" className="btn btn-outline-success btn-sm btn-style" style={{ "marginRight": ".5rem" }}><Link to="/login">signIn</Link></button><button type="button" className="btn btn-outline-success btn-sm btn-style"><Link to="/login">signUp</Link></button></>)
                 }
                 
               </div>  
               
             </div>
-              <div className="search-icon " onClick={toggle}>
+            {props.currentUser &&
+                  (<div className="avatar">
+                    <img src={props.currentUser.photoURL} alt="" onClick={signOut}/>
+                  </div>)
+                  
+                }
+              <div className="search-icon" onClick={toggle}>
                   <BiSearch/>
               </div>
           </div>
@@ -97,4 +93,4 @@ export default function Navbar(props) {
       </>
     )
   }
-
+export {searchVal};
