@@ -1,19 +1,22 @@
 import React ,{useEffect, useState} from 'react';
+import { useContextValue } from '../../Context/Customcontext';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import db from '../Firebase';
-import {firebase} from '../Firebase';
+import db from '../../Firebase';
+import {firebase} from '../../Firebase';
 import { collection,getDocs } from "firebase/firestore";
-import { getPlatformsIcon , myStyle , getDate } from './Util_functions';
+import { getPlatformsIcon , myStyle , getDate } from '../../Utils/Util_functions';
 import { useNavigate } from 'react-router';
 
 function DetailHeader(props) {
+  const {currentUser} = useContextValue();
   const navigate = useNavigate();
   const [added, setAdded] = useState(false);
 
+
   useEffect(() => {
     const checkLibrary = async ()=>{
-      const gamesCollection = collection(db, "library" , props.currentUser.email , "games")
+      const gamesCollection = collection(db, "library" , currentUser.email , "games")
       const games = await getDocs(gamesCollection);
       games.forEach((doc) => {
         if(doc.data().id === props.gameDetail.id){
@@ -21,14 +24,14 @@ function DetailHeader(props) {
         }
       })
     }
-    if(props.currentUser){
+    if(currentUser){
       checkLibrary();
     }
-  }, [props.currentUser , props.gameDetail.id]);
+  }, [currentUser , props.gameDetail.id]);
 
   const addToLibrary = async ()=>{
-    if(!added && props.currentUser){
-      console.log(props.currentUser.email)
+    if(!added && currentUser){
+      console.log(currentUser.email)
       setAdded(true);
       let payload = {
         id: props.gameDetail.id,
@@ -37,9 +40,9 @@ function DetailHeader(props) {
         platforms: props.gameDetail.parent_platforms,
         timeStamp: firebase.firestore.Timestamp.now()
       }
-      await db.collection('library').doc(props.currentUser.email).collection('games').add(payload);
+      await db.collection('library').doc(currentUser.email).collection('games').add(payload);
       console.log(props.gameDetail.id , 'added to library');
-    }else if(!props.currentUser){
+    }else if(!currentUser){
       navigate('/login');
     }
   }
@@ -67,7 +70,7 @@ function DetailHeader(props) {
               <p>Developers : {props.gameDetail.developers?.map((el)=>{return el.name}).join(' , ')}</p>
               <p>Publishers : {props.gameDetail.publishers?.map((el)=>{return el.name}).join(' , ')}</p>
               <p>Available On : {props.gameDetail.stores?.map((el)=>{return el.store.name}).join(' , ')}</p>
-              <button type="button" className="btn btn-outline-success btn-sm btn-style" onClick={addToLibrary}>{props.currentUser && added ? 'In Library' : 'add to library'}</button>
+              <button type="button" className="btn btn-outline-success btn-sm btn-style" onClick={addToLibrary}>{currentUser && added ? 'In Library' : 'add to library'}</button>
           </div>
     </>
   )

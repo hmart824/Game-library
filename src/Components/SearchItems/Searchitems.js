@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './Searchitems.css';
-import {searchVal} from './Navbar';
+import {searchVal} from '../Navbar/Navbar';
 
 export default function Searchitems(props) {
   const setSearch = useContext(searchVal);

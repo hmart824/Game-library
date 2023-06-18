@@ -1,15 +1,15 @@
-import React , {useEffect , useState , useContext} from 'react';
-import { data } from '../App';
+import React , {useEffect , useState } from 'react';
+import { useContextValue } from '../../Context/Customcontext';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { getPlatformsIcon } from './Util_functions';
+import { getPlatformsIcon } from '../../Utils/Util_functions';
 import { ImCross } from "react-icons/im";
 import './Library.css';
-import db from '../Firebase';
+import db from '../../Firebase';
 import { useNavigate } from 'react-router';
 
 function Library() {
-  const currentUser = useContext(data);
+  const {currentUser} = useContextValue();
     const [collection, setCollection] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {

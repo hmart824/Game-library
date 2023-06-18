@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Search.css';
-import Searchitems from './Searchitems';
-import { searchGamesURL } from './Api';
-import Loader from './Loader';
+import Searchitems from '../SearchItems/Searchitems';
+import { searchGamesURL } from '../../Api/Api';
+import Loader from '../Loader/Loader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default class Search extends Component {

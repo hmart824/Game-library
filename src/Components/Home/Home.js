@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-
-import Gameitems from './Gameitems';
+import Gameitems from '../GamesItem/Gameitems';
 import './Home.css';
-import Loader from './Loader';
+import Loader from '../Loader/Loader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default class Home extends Component {

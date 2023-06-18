@@ -3,7 +3,7 @@ import './Gameitems.css';
 import { useNavigate } from 'react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { getPlatformsIcon , myStyle , getDate } from './Util_functions';
+import { getPlatformsIcon , myStyle , getDate } from '../../Utils/Util_functions';
 
 
 export default function Gameitems(props) {

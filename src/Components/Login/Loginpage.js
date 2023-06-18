@@ -1,5 +1,5 @@
 import React from 'react';
-import db,{ auth, googleProvider } from '../Firebase';
+import db,{ auth, googleProvider } from '../../Firebase';
 import './Loginpage.css';
 import { useNavigate } from 'react-router';
 
@@ -36,9 +36,9 @@ function Loginpage() {
                     <input type="password" name="password" id="password" required/>
                     <span>Password</span>
                 </div>
-                <button style={{'marginTop': '1.2rem'}}>Submit</button>
+                <button type='submit' style={{'marginTop': '1.2rem'}}>Submit</button>
 
-                <button onClick={signInWithGoogle}>Sign in with google</button>
+                <button type='button' onClick={signInWithGoogle}>Sign in with google</button>
             </form>
         </div>
    </>

@@ -1,8 +1,7 @@
-import React, { Suspense , lazy , useEffect , useState , createContext} from 'react';
-import { auth } from './Firebase';
-import {onAuthStateChanged } from "firebase/auth";
-import Navbar from './Components/Navbar';
-import Loader from './Components/Loader';
+import React, { Suspense , lazy , useEffect } from 'react';
+import { useContextValue } from './Context/Customcontext';
+import Navbar from './Components/Navbar/Navbar';
+import Loader from './Components/Loader/Loader';
 import './App.css';
 import {
   popularGamesURL,
@@ -17,7 +16,7 @@ import {
   puzzleGamesURL,
   racingGamesURL,
   sportsGamesURL
-} from './Components/Api';
+} from './Api/Api';
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,30 +24,18 @@ import {
   Outlet,
   Navigate
 } from "react-router-dom";
-const Home = lazy(() => import('./Components/Home'));
-const Detailpage = lazy(() => import('./Components/Detailpage'));
-const Loginpage = lazy(() => import('./Components/Loginpage'));
-const Library = lazy(() => import('./Components/Library'));
-const Protected = lazy(() => import('./Components/Protected'));
+const Home = lazy(() => import('./Components/Home/Home'));
+const Detailpage = lazy(() => import('./Components/Details/Detailpage'));
+const Loginpage = lazy(() => import('./Components/Login/Loginpage'));
+const Library = lazy(() => import('./Components/Library/Library'));
 
-const data = createContext();
+
 export default function App() {
-  const [user, setUser] = useState(null);
+  const {currentUser , authentication} = useContextValue();
 
   useEffect(() => {
-    const authentication = ()=>{
-     onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser) {
-          setUser(currentUser);
-          console.log('usersigned in');
-        }else{
-          console.log("user signed out");
-        }
-      });
-
-    }
    authentication();
-  })
+  },[])
   
   
     return (
@@ -58,11 +45,11 @@ export default function App() {
             <Suspense fallback={<Loader/>}>
               <Routes>
                 <Route exact path='*' element={<h1>not valid</h1>}/>
-                <Route exact path='/login' element={user ? <Navigate to='/'/> : <Loginpage/>}/>
+                <Route exact path='/login' element={currentUser ? <Navigate to='/'/> : <Loginpage/>}/>
                 <Route 
                   element={
                     <>
-                      <Navbar currentUser={user} setUser={setUser}/> 
+                      <Navbar /> 
                       <Outlet/>
                     </>
                   }
@@ -81,12 +68,8 @@ export default function App() {
                     <Route  path='racingGames' element={<Home key="racingGames" URL = {(p)=> racingGamesURL(p)} title="Racing Games"/>}/>
                     <Route  path='sportsGames' element={<Home key="sportsGames" URL = {(p)=> sportsGamesURL(p)} title="Sports Games"/>}/>
                   </Route>
-                  <Route exact path='/games/:id' element={<Detailpage currentUser={user}/>}/>
-                  <Route exact path='/library' element={
-                    <data.Provider value={user}>
-                      <Protected Component={Library} user={user}/>
-                    </data.Provider>
-                  }/>
+                  <Route exact path='/games/:id' element={<Detailpage/>}/>
+                  <Route exact path='/library' element={currentUser ? <Library/> : <Navigate to='/'/>}/>
                 </Route>
               </Routes>
             </Suspense>
@@ -96,5 +79,4 @@ export default function App() {
     )
   };
 
-  export {data};
 

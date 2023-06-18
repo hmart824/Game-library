@@ -1,25 +1,17 @@
-import React, { createContext } from 'react';
+import React, { createContext} from 'react';
 import { useState } from 'react';
-import {auth} from '../Firebase';
 import './Navbar.css';
-import Search from './Search';
+import Search from '../Search/Search';
 import { BiSearch } from "react-icons/bi";
 import { Link } from 'react-router-dom';
+import { useContextValue } from '../../Context/Customcontext';
 
 const searchVal = createContext();
-export default function Navbar(props) {
+export default function Navbar() {
+  const {currentUser , signOut} = useContextValue();
   const [search, setSearch] = useState(false);
   const toggle = ()=>{
     setSearch(!search);
-  }
-
-  const signOut = ()=>{
-    auth.signOut()
-    .then(()=>{
-      console.log('signed out successfully');
-      props.setUser(null);
-    })
-    .catch((err)=>{alert(err.message)})
   }
   
     return (
@@ -66,21 +58,21 @@ export default function Navbar(props) {
                     <li><Link className="dropdown-item" to="/genre/sportsGames">Sports</Link></li>
                   </ul>
                 </li>
-                {props.currentUser && <li className="nav-item">
+                {currentUser && <li className="nav-item">
                   <Link className="nav-link" to="/library">Library</Link>
                 </li>}
               </ul>
               
               <div className=" nav-end-item d-flex">
-                {!props.currentUser && (<><button type="button" className="btn btn-outline-success btn-sm btn-style" style={{ "marginRight": ".5rem" }}><Link to="/login">signIn</Link></button><button type="button" className="btn btn-outline-success btn-sm btn-style"><Link to="/login">signUp</Link></button></>)
+                {!currentUser && (<><button type="button" className="btn btn-outline-success btn-sm btn-style" style={{ "marginRight": ".5rem" }}><Link to="/login">signIn</Link></button><button type="button" className="btn btn-outline-success btn-sm btn-style"><Link to="/login">signUp</Link></button></>)
                 }
                 
               </div>  
               
             </div>
-            {props.currentUser &&
+            {currentUser &&
                   (<div className="avatar">
-                    <img src={props.currentUser.photoURL} alt="" onClick={signOut}/>
+                    <img src={currentUser.photoURL} alt="" onClick={signOut}/>
                   </div>)
                   
                 }

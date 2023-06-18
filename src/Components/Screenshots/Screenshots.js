@@ -1,4 +1,5 @@
 import React from 'react';
+import { useContextValue } from '../../Context/Customcontext';
 import './Screenshots.css';
 import ReactPlayer from 'react-player';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -12,7 +13,8 @@ import "swiper/css/effect-coverflow";
 // import required modules
 import { EffectCoverflow} from "swiper";
 
-function Screenshots(props) {
+function Screenshots() {
+  const {trailers , screenshots} = useContextValue();
   return (
     <>
         <h3>Screenshots</h3>
@@ -31,7 +33,7 @@ function Screenshots(props) {
           modules={[EffectCoverflow]}
           className="mySwiper"
         >
-                {props.trailers && props.trailers.map((el)=>{
+                {trailers && trailers.map((el)=>{
                     return  <SwiperSlide key={el.id}>
                                 <ReactPlayer
                                     className='react-player'
@@ -45,7 +47,7 @@ function Screenshots(props) {
                                     />
                             </SwiperSlide>
                 })}
-                {props.screenshots.map((el)=>{
+                {screenshots.map((el)=>{
                     return <SwiperSlide key={el.id}>
                                 {/* <img src={} alt="gt v screen shots" /> */}
                                 <LazyLoadImage
