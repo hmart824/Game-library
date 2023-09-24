@@ -5,15 +5,36 @@ import axios from 'axios';
 
 const customContext = createContext();
 
+const initialState = {
+  user: null,
+  games: {},
+  gameDetails: {
+    detail: [],
+    screenshots: [],
+    stores: [],
+    developers: [],
+  },
+  loading: false
+}
+
 const reducer = (state , action)=>{
   let {payload} = action;
   switch(action.type){
     case "RESET" :
+    case "SET_DATA":
     case "GET_DATA" :
       return {
           ...state,
           [payload.state] : payload.value
       };
+    case "ADD_GAME_DETAILS":
+      return {
+        ...state,
+        gameDetails: {
+          ...state.gameDetails,
+          [payload.state] : payload.value
+        }
+      }
     
     default: 
     return state;
@@ -28,7 +49,7 @@ const useContextValue = ()=>{
 }
 
 function Customcontext({children}) {
-  const [state, dispatch] = useReducer(reducer, {user: null , gameDetail: [] , screenshots: [] , stores: [] , trailers: [] , developers: []});
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   //check the user is logged in or not
   const authentication = ()=>{
@@ -67,54 +88,68 @@ function Customcontext({children}) {
 
   //fetch data form url
   const getDataFromURL = async(url , id , state )=>{
+    dispatch({type: 'SET_DATA' , payload: {state: 'loading' , value: true}});
     let res = await axios.get(url(id));
+    dispatch({
+      type: 'ADD_GAME_DETAILS',
+      payload: {
+        state,
+        value: state === 'detail' ? res.data : res.data.results
+      }
+     });
+     dispatch({type: 'SET_DATA' , payload: {state: 'loading' , value: false}});
+  }
+
+  const getGames = async(URL , title)=>{
+    dispatch({type: 'SET_DATA' , payload: {state: 'loading' , value: true}});
+    let res = await axios.get(URL(1));
     dispatch({
       type: 'GET_DATA',
       payload: {
-        state,
-        value: state === 'gameDetail' ? res.data : res.data.results
+        state: 'games',
+        value: {
+          ...state.games,
+          [title]: {
+            data: res.data.results,
+            totalResults: res.data.count,
+            page: 1
+          }
+        }
       }
-     });
+    })
+    dispatch({type: 'SET_DATA' , payload: {state: 'loading' , value: false}});
+  };
+
+  const fetchMoreGames = async(URL , title)=>{
+    let nextPage = state.games[title].page + 1;
+    let res = await axios.get(URL(nextPage));
+    console.log('fetchmore' , res);
+    dispatch({
+      type: 'GET_DATA',
+      payload: {
+        state: 'games',
+        value: {
+          ...state.games,
+          [title]: {
+            ...state.games[title],
+            data: state.games[title].data.concat(res.data.results),
+            page: nextPage
+          }
+        }
+      }
+    })
   }
 
   //it will reset the states
   const reset = ()=>{
     console.log('active')
     dispatch({
-      type: 'RESET',
-      payload: {
-        state : 'gameDetail',
-        value: []
+      type: 'RESET' , 
+      payload:{
+        state: 'gameDetails',
+        value: initialState.gameDetails
       }
-     });
-    dispatch({
-      type: 'RESET',
-      payload: {
-        state : 'screenshots',
-        value: []
-      }
-     });
-    dispatch({
-      type: 'RESET',
-      payload: {
-        state : 'stores',
-        value: []
-      }
-     });
-    dispatch({
-      type: 'RESET',
-      payload: {
-        state : 'trailers',
-        value: []
-      }
-     });
-    dispatch({
-      type: 'RESET',
-      payload: {
-        state : 'developers',
-        value: []
-      }
-     });
+    })
   }
 
   return (
@@ -125,11 +160,11 @@ function Customcontext({children}) {
         signOut,
         getDataFromURL,
         reset,
-        gameDetail: state.gameDetail,
-        screenshots: state.screenshots,
-        stores: state.stores,
-        trailers: state.trailers,
-        developers: state.developers
+        getGames,
+        fetchMoreGames,
+        loading: state.loading,
+        games: state.games,
+        gameDetails: state.gameDetails,
       }}
       >
         {children}

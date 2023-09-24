@@ -15,6 +15,7 @@ import { SiGogdotcom } from "react-icons/si";
 import { SiNintendo } from "react-icons/si";
 import { SiEpicgames } from "react-icons/si";
 
+
 export const getPlatformsIcon = (slug)=>{
     let platforms = {
       pc : <AiFillWindows title='pc'/>,
@@ -118,4 +119,4 @@ export const getStoreIcon = (id)=>{
       year: 'numeric'
     }
     return d.toLocaleString('default' , opts);
-  }
+  };

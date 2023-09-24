@@ -75,6 +75,9 @@
     position: relative;
     color: white;
 }
+#library-btn:focus{
+  color: white !important;
+}
 .date{
     /* border: 2px solid white; */
     background-color: white;

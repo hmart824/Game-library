@@ -11,13 +11,14 @@ import { useParams } from 'react-router';
 import "swiper/css";
 import "swiper/css/navigation";
 import './Detailpage.css';
+import Loader from '../Loader/Loader';
 
 export default function Detailpage(props) {
-  const {getDataFromURL, reset , gameDetail , stores , developers } = useContextValue();
+  const {getDataFromURL, reset , gameDetails , loading } = useContextValue();
   const {id} = useParams();
   useEffect(() => {
     try{
-      getDataFromURL(detailURL , id , 'gameDetail')
+      getDataFromURL(detailURL , id , 'detail')
       getDataFromURL(screenshotsURL , id , 'screenshots')
       getDataFromURL(storesURL , id , 'stores')
       getDataFromURL(trailersURL , id , 'trailers')
@@ -36,15 +37,14 @@ export default function Detailpage(props) {
     window.open(`${link}`);
   };
   
-
-
-    
+  if(loading){
+    return <Loader/>
+  }
   return (
     <>
-    {/* <Navbar setUser={setUser}/>  */}
-     <div className="detail-container" style={{"--img": `url(${gameDetail.background_image})`}}>
+     <div className="detail-container" style={{"--img": `url(${gameDetails.detail.background_image})`}}>
         <div className="game-detail">
-          <DetailHeader gameDetail={gameDetail}/>
+          <DetailHeader gameDetail={gameDetails.detail}/>
         </div>
         
         <section className="screenshots my-3">
@@ -53,30 +53,30 @@ export default function Detailpage(props) {
 
         <section className="about-game my-3">
           <h3>About</h3>
-          <p>{gameDetail.description_raw}</p>
+          <p>{gameDetails.detail.description_raw}</p>
         </section>
 
         <section className="requirements">
           <h3>Pc Requirements</h3>
-          <p>{gameDetail.platforms?.map( el => {
+          <p>{gameDetails.detail.platforms?.map( el => {
             return el.platform.slug === 'pc' && el.requirements.minimum;
           })}</p>
-          <p>{gameDetail.platforms?.map( el => {
+          <p>{gameDetails.detail.platforms?.map( el => {
             return el.platform.slug === 'pc' && el.requirements.recommended;
           })}</p>
         </section>
 
-        {stores && <section className="stores">
+        {gameDetails.stores && <section className="stores">
           <h3>Available On</h3>
           <ul>
-            {stores?.map((el)=>{
+            {gameDetails.stores?.map((el)=>{
               return <li key={el.id} onClick={()=>{goToSite(el.url)}}>{getStoreIcon(el.store_id).icon} <span>{getStoreIcon(el.store_id).name}</span></li>
             })}
           </ul>
         </section>}
 
         <section className="dev-team">
-            {developers && <DevelopmentTeam developers={developers}/>}
+            {gameDetails.developers && <DevelopmentTeam developers={gameDetails.developers}/>}
         </section>
     </div>
     </>

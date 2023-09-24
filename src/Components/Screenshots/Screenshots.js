@@ -14,7 +14,7 @@ import "swiper/css/effect-coverflow";
 import { EffectCoverflow} from "swiper";
 
 function Screenshots() {
-  const {trailers , screenshots} = useContextValue();
+  const {gameDetails} = useContextValue();
   return (
     <>
         <h3>Screenshots</h3>
@@ -33,7 +33,7 @@ function Screenshots() {
           modules={[EffectCoverflow]}
           className="mySwiper"
         >
-                {trailers && trailers.map((el)=>{
+                {gameDetails.trailers && gameDetails.trailers.map((el)=>{
                     return  <SwiperSlide key={el.id}>
                                 <ReactPlayer
                                     className='react-player'
@@ -47,9 +47,8 @@ function Screenshots() {
                                     />
                             </SwiperSlide>
                 })}
-                {screenshots.map((el)=>{
+                {gameDetails.screenshots.map((el)=>{
                     return <SwiperSlide key={el.id}>
-                                {/* <img src={} alt="gt v screen shots" /> */}
                                 <LazyLoadImage
                                 src={el.image}
                                 effect='blur'
